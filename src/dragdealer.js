@@ -503,6 +503,7 @@ Dragdealer.prototype = {
       Cursor.x - this.offset.wrapper[0] - (this.handle.offsetWidth / 2),
       Cursor.y - this.offset.wrapper[1] - (this.handle.offsetHeight / 2)
     ]);
+    this.wrapper.dispatchEvent(new CustomEvent('tapstart'));
   },
   stopTap: function() {
     if (this.disabled || !this.tapping) {
@@ -511,6 +512,7 @@ Dragdealer.prototype = {
     this.tapping = false;
 
     this.setTargetValue(this.value.current);
+    this.wrapper.dispatchEvent(new CustomEvent('tapstop'));
   },
   startDrag: function() {
     if (this.disabled) {
@@ -526,6 +528,7 @@ Dragdealer.prototype = {
     if (!this.wrapper.className.match(this.options.activeClass)) {
       this.wrapper.className += ' ' + this.options.activeClass;
     }
+    this.wrapper.dispatchEvent(new CustomEvent('dragstart'));
   },
   stopDrag: function() {
     if (this.disabled || !this.dragging) {
@@ -541,6 +544,7 @@ Dragdealer.prototype = {
     }
     this.setTargetValue(target);
     this.wrapper.className = this.wrapper.className.replace(' ' + this.options.activeClass, '');
+    this.wrapper.dispatchEvent(new CustomEvent('dragstop'));
   },
   callAnimationCallback: function() {
     var value = this.value.current;
